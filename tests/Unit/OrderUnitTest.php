@@ -10,6 +10,9 @@ use Mockery;
 
 class OrderUnitTest extends TestCase
 {
+
+    use DatabaseMigrations;
+
     /**
      * A basic test example.
      *
