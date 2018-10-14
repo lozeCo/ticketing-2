@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class EventTest extends TestCase
 {
+    use DatabaseMigrations;
+    
     /**
      * A basic test example.
      *
