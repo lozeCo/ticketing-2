@@ -26,32 +26,42 @@ class EventTest extends TestCase
 
         // Assert
         $response->assertStatus(200);
-    		$response->assertJsonStructure([
-    			"status", "code", "messages", "data" => [
-    				"events"
-    			]
-    		]);
+        $response->assertJsonStructure([
+          "status", "code", "messages", "data" => [
+            "events"
+          ]
+        ]);
     }
 
     public function testEventsCanBeFiltered()
-  	{
-  		$event = factory(\App\Event::class)->create([
-  			'name' => 'Evento de prueba'
-  		]);
-      $event = factory(\App\Event::class)->create([
-  			'name' => 'Otro evento'
-  		]);
-  		$response = $this->get("api/events?name=prueba");
-      //dd($response);
-  		$response->assertStatus(200);
-  		$response->assertJsonStructure([
-  			"status", "code", "messages", "data" => [
-  				"events" => [
-            ['id', 'name']
-          ]
-  			]
-  		]);
-  		$response->assertSee('Evento de prueba');
-      $response->assertDontSee('Otro evento');
-  	}
+    {
+        $event = factory(\App\Event::class)->create([
+            'name' => 'Evento de prueba'
+        ]);
+        $event = factory(\App\Event::class)->create([
+            'name' => 'Otro evento'
+        ]);
+        $response = $this->get("api/events?name=prueba");
+        //dd($response);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "status", "code", "messages", "data" => [
+                "events" => [
+                    ['id', 'name']
+                ]
+            ]
+        ]);
+        $response->assertSee('Evento de prueba');
+        $response->assertDontSee('Otro evento');
+    }
+
+    public function testEventsCreation()
+    {
+        $event = factory(App\Event::class)->create([
+            'name' => 'Registro de concierto'
+        ]);
+
+        $this->seeInDatabase('event',['name' => "Registro de concierto"]);
+        // $response = $this->post("api/events?");
+    }
 }

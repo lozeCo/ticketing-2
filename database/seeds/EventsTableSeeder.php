@@ -12,18 +12,15 @@ class EventsTableSeeder extends Seeder
      */
     public function run()
     {
-        // // Filling out the fields on our own
-        // DB::table('events')->insert([
-        //     'name'        => str_random(10),
-        //     'description' => str_random(100),
-        //     'venue'       => str_random(20),
-        //     'start_date'  => Carbon::now()->addDays(5),
-        //     'created_at'  => Carbon::now(),
-        //     'updated_at'  => Carbon::now()
-        // ]);
+        //Always restarted the database
+        // App\Event::truncate();
 
-
-        // Using model factory
-        factory(App\Event::class)->make()->save();
+        // Using model factory        
+        factory(App\Event::class,5)
+            ->create()
+            ->each(function($event){              
+                $event->save();
+            }
+        );
     }
 }

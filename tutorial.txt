@@ -1,0 +1,17 @@
+php artisan make:seeder EventsTableSeeder
+
+
+composer dump-autoload
+
+
+
+php artisan db:seed --class=EventsTableSeeder
+
+php artisan db:seed
+
+
+php artisan make:factory EventFactory
+php artisan make:factory EventFactory --model=Event
+
+
+php artisan make:test EventTest
