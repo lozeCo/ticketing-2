@@ -15,3 +15,6 @@ php artisan make:factory EventFactory --model=Event
 
 
 php artisan make:test EventTest
+
+
+https://stackoverflow.com/questions/23505875/laravel-routeresource-vs-routecontroller

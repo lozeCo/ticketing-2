@@ -25,17 +25,37 @@ class EventsController extends ApiController
         ]);
     }
 
-    public function show(Event $eventRepository, Request $request, $event)
+    public function show(Event $eventRepository, $id)
     {
-        $events = $eventRepository;
-        
-        if ($event)
-        {
-            $events = $events->where('id',$event)->first();
+        $events = $eventRepository;        
+
+        if ($id) {
+            $events = $events->where('id',$id)->first();
         }
 
         return $this->respondWithData([
             'events' => $events
         ]);
+    }
+
+    public function update(Event $eventRepository, Request $request, $id)
+    {
+        $event = $eventRepository
+            ->findOrFail($id);
+
+        if (is_null($event)) {
+            return $this->respondNotFound();
+        } 
+        else
+        {
+            $event->update($request->all());
+        }
+    }
+
+    public function store(Event $eventRepository, Request $request)
+    {
+        $event = $eventRepository
+            ->create($request->all());
+        $this->respondCreated($event);
     }
 }
